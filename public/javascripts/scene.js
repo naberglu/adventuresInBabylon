@@ -35,8 +35,9 @@ function createSceneTuto(engine) {
     hlight0.specular = new BABYLON.Color3(1, 0, 0);
     // Ground color
     hlight0.groundColor = new BABYLON.Color3(0, 0, 0);
+    hlight0.intensity = 0.2;
 
-    var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 0, 0), scene);
+    var light0 = new BABYLON.PointLight("light0", new BABYLON.Vector3(0, 0, 0), scene);
     light0.diffuse = new BABYLON.Color3(1, 1, 0);
     light0.specular = new BABYLON.Color3(1, 1, 0);
     light0.intensity = 1;
@@ -80,70 +81,43 @@ function createSceneTuto(engine) {
     planet2.material = materialPlanet2;
     planet3.material = materialPlanet3;
 
-    // Animate the planets
-    var rotateSun = new BABYLON.Animation(
-	"rotateSun",
-	"rotation.y",
-	30,
-	BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-	BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-    var rotatePlanet1 = new BABYLON.Animation(
-	"rotatePlanet1",
-	"rotation.y",
-	30,
-	BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-	BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-    var rotatePlanet2 = new BABYLON.Animation(
-	"rotatePlanet2",
-	"rotation.y",
-	30,
-	BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-	BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-    var rotatePlanet3 = new BABYLON.Animation(
-	"rotatePlanet3",
-	"rotation.y",
-	30,
-	BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-	BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-
-    var sunKeys = [{frame: 0, value: 1}, {frame: 200, value: 1}];
-    rotateSun.setKeys(sunKeys);
-    sun.animations.push(rotateSun);
-    scene.beginAnimation(sun, 0, 100, true);
-
-    var planet1Keys = [{frame: 0, value: 1}, {frame: 200, value: 3}];
-    rotatePlanet1.setKeys(planet1Keys);
-    planet1.animations.push(rotatePlanet1);
-    scene.beginAnimation(planet1, 0, 100, true);
-
+     // Shadows
+    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light0);
+    shadowGenerator.getShadowMap().renderList.push(moon1);
+    planet1.receiveShadows = true;
+    
     var angle = 0.0;
     var speedy = 0.0;
+    var planet1RotationSpeed = 0.01;
+    var planet2RotationSpeed = 0.02;
+    var planet3RotationSpeed = 0.03;
     scene.beforeRender = function() {
-	planet1.position.x = planet1Position * Math.cos(angle);
-	moon1.position.x = planet1.position.x + (planet1Position - moon1Position) * Math.cos(speedy);
-	planet1.position.y = (planet1Position * 0.18) * Math.cos(angle);
-	moon1.position.y = planet1.position.y;
-	planet1.position.z = planet1Position * Math.sin(angle);
-	moon1.position.z = planet1.position.z + (planet1Position - moon1Position) * Math.sin(speedy);
+        // Planet 1 orbit
+	planet1.position = new BABYLON.Vector3(planet1Position * Math.cos(angle), 
+					       (planet1Position * 0.18) * Math.cos(angle),
+					       planet1Position * Math.sin(angle));
+	planet1.rotation.y += planet1RotationSpeed;
+
+	// Moon 1 orbit
+	moon1.position = new BABYLON.Vector3(planet1.position.x + (planet1Position - moon1Position) * Math.cos(speedy),
+					     planet1.position.y,
+					     planet1.position.z + (planet1Position - moon1Position) * Math.sin(speedy));
+
+	// Planet 2 orbit
+	planet2.position = new BABYLON.Vector3((planet2Position * 2) * Math.cos(angle) + 100, 
+					       planet2.position.y, 
+					       planet2Position * Math.sin(angle));
+	planet2.rotation.y += planet2RotationSpeed;
+
+	// Planet 3 orbit
+	planet3.position = new BABYLON.Vector3((planet3Position * 1.8412451651) * Math.cos(angle),
+					       planet3.position.y,
+					       planet3Position * Math.sin(angle));
+	planet3.rotation.y += planet3RotationSpeed;
+
 	angle += 0.01;
 	speedy += 0.1;
-
-	planet2.position.x = (planet2Position * 2) * Math.cos(angle) + 100;
-	planet2.position.z = planet2Position * Math.sin(angle);
-
-	planet3.position.x = (planet3Position * 1.8412451651) * Math.cos(angle);
-	planet3.position.z = planet3Position * Math.sin(angle);
     };
-
-    var planet2Keys = [{frame: 0, value: 1}, {frame: 200, value: 10}];
-    rotatePlanet2.setKeys(planet2Keys);
-    planet2.animations.push(rotatePlanet2);
-    scene.beginAnimation(planet2, 0, 100, true);
-
-    var planet3Keys = [{frame: 0, value: 1}, {frame: 200, value: 3}];
-    rotatePlanet3.setKeys(planet3Keys);
-    planet3.animations.push(rotatePlanet3);
-    scene.beginAnimation(planet3, 0, 100, true);
 
     return scene;
 }
