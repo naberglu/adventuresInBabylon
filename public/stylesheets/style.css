@@ -5,3 +5,32 @@ html,body,canvas {
   padding: 0;
   overflow: hidden;
 }
+
+#topBorder, #bottomBorder {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+}
+#rightBorder, #leftBorder {
+  position: absolute;
+  height: 100%;
+  width: 40px;
+
+}
+
+#topBorder {
+  top: 0;
+}
+
+#rightBorder {
+  right: 0;
+}
+
+#leftBorder {
+  left: 0;
+}
+
+#bottomBorder {
+  bottom: 0;
+}
+

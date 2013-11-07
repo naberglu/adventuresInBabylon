@@ -1,7 +1,8 @@
-function createSceneTuto(engine) {
+function gameplayScene(engine) {
     //Creation of the scene 
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = [0,0,0];
+
     var starfield = new BABYLON.ParticleSystem("particles", 1000, scene);
     starfield.particleTexture = new BABYLON.Texture("/images/star.png", scene);
     starfield.minAngularSpeed = -4.5;
@@ -25,7 +26,7 @@ function createSceneTuto(engine) {
     starfield.start();
 
     //Adding of the Camera
-    var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", Math.PI / 2, 0, 200, new BABYLON.Vector3(0, 0, 0), scene);
+    var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", Math.PI / 2, Math.PI / 3, 410, new BABYLON.Vector3(0, 0, 0), scene);
 
     // Let there be light
     var hlight0 = new BABYLON.HemisphericLight("Hlight0", new BABYLON.Vector3(0, 50, 0), scene);
@@ -37,18 +38,18 @@ function createSceneTuto(engine) {
     hlight0.groundColor = new BABYLON.Color3(0, 0, 0);
     hlight0.intensity = 0.2;
 
-    var light0 = new BABYLON.PointLight("light0", new BABYLON.Vector3(0, 0, 0), scene);
+    var light0 = new BABYLON.PointLight("light0", new BABYLON.Vector3(0, -0, 0), scene);
     light0.diffuse = new BABYLON.Color3(1, 1, 0);
     light0.specular = new BABYLON.Color3(1, 1, 0);
     light0.intensity = 1;
 
     // Add some objects
     var planet1Radius = 10.0;
-    var sun = BABYLON.Mesh.CreateSphere("sun", 20.0, 30.0, scene);
+    var sun = BABYLON.Mesh.CreateSphere("sun", 20.0, 60.0, scene);
     var planet1 = BABYLON.Mesh.CreateSphere("planet1", 20.0, planet1Radius, scene);
     var planet2 = BABYLON.Mesh.CreateSphere("planet2", 20.0, 15.0, scene);
     var planet3 = BABYLON.Mesh.CreateSphere("planet3", 20.0, 20.0, scene);
-    var moon1 = BABYLON.Mesh.CreateSphere("moon1", 20.0, 5.0, scene);
+    var moon1 = BABYLON.Mesh.CreateSphere("moon1", 20.0, 2.0, scene);
 
     // Change the position
     var planet1Position = 50;
