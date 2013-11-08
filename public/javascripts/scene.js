@@ -89,10 +89,13 @@ function gameplayScene(engine) {
     
     var angle = 0.0;
     var speedy = 0.0;
-    var planet1RotationSpeed = 0.01;
-    var planet2RotationSpeed = 0.02;
-    var planet3RotationSpeed = 0.03;
+    var sunRotationSpeed = 0.01;
+    var planet1RotationSpeed = 0.03;
+    var planet2RotationSpeed = 0.05;
+    var planet3RotationSpeed = 0.07;
     scene.beforeRender = function() {
+	sun.rotation.y -= sunRotationSpeed;
+
         // Planet 1 orbit
 	planet1.position = new BABYLON.Vector3(planet1Position * Math.cos(angle), 
 					       (planet1Position * 0.18) * Math.cos(angle),
