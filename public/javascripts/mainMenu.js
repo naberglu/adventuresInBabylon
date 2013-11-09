@@ -15,7 +15,7 @@ function mainMenu(engine) {
     hlight0.intensity = 0.5;
 
     var title = BABYLON.Mesh.CreateBox("title", 1.0, scene);
-    var singlePlayer = BABYLON.Mesh.CreateBox("singlePlayer", 1.0, scene);
+    var singlePlayer = BABYLON.Mesh.CreateCylinder("singlePlayer", 0.0, 3, 3, 6, scene, false);
     var multiPlayer = BABYLON.Mesh.CreateBox("multiPlayer", 1.0, scene);
     var settings = BABYLON.Mesh.CreateBox("settings", 1.0, scene);
     var credits = BABYLON.Mesh.CreateBox("credits", 1.0, scene);
@@ -24,9 +24,10 @@ function mainMenu(engine) {
     title.position.x = -14;
     title.scaling = titleDimensions;
 
-    var dimensions = new BABYLON.Vector3(4, 0.00001, 30);
+    var dimensions = new BABYLON.Vector3(2, 0.00001, 13);
     singlePlayer.position.x = -4;
     singlePlayer.scaling = dimensions;
+    console.log(singlePlayer);
 
     multiPlayer.position.x = 2;
     multiPlayer.scaling = dimensions;

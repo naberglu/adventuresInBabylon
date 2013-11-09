@@ -1,4 +1,4 @@
-var scene;
+
 function borderResize() {
     var width = $(window).width();
     var height = $(window).height();
@@ -11,6 +11,7 @@ function borderResize() {
 };
 
 function loadScene(engine, id) {
+    var scene;
     // Cleanup time
     if (scene) {
         scene.dispose();
@@ -26,4 +27,16 @@ function loadScene(engine, id) {
 	scene = gameplayScene(engine);
 	break;
     }
+    scene.executeWhenReady(function () {
+        // Once the scene is loaded, just register a render loop to render it
+        engine.runRenderLoop(function () {
+	    scene.render();
+        });
+
+        // Resize event
+        window.addEventListener("resize", function () {
+	    engine.resize();
+	    borderResize();
+        });
+    });	
 };
