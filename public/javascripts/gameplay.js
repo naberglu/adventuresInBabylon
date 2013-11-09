@@ -1,7 +1,10 @@
 function gameplayScene(engine) {
-    //Creation of the scene 
+    //Creation of the scene
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = [0,0,0];
+
+    // Unbind the click event for the main menu
+    $(window).off('click');
 
     var starfield = new BABYLON.ParticleSystem("particles", 1000, scene);
     starfield.particleTexture = new BABYLON.Texture("/images/star.png", scene);
@@ -122,6 +125,44 @@ function gameplayScene(engine) {
 	angle += 0.01;
 	speedy += 0.1;
     };
+
+    // Move the camera around when the user's mouse is near the edge
+    var interval = 1;
+    var speed = 5;
+    $('#topBorder').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z -= speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+
+    $('#bottomBorder').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z += speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+
+    $('#leftBorder').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.x += speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+
+    $('#rightBorder').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.x -= speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+
+    // Set the size of the borders given the windows width/height
+    borderResize();
 
     return scene;
 }
