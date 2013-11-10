@@ -1,4 +1,3 @@
-
 function borderResize() {
     var width = $(window).width();
     var height = $(window).height();
@@ -12,12 +11,6 @@ function borderResize() {
 
 function loadScene(engine, id) {
     var scene;
-    // Cleanup time
-    if (scene) {
-        scene.dispose();
-        scene = null;
-    }
-
     // Load the specific scene
     switch(id) {
     case 0:

@@ -46,13 +46,18 @@ function gameplayScene(engine) {
     light0.specular = new BABYLON.Color3(1, 1, 0);
     light0.intensity = 1;
 
-    // Add some objects
+    // Add some planets
     var planet1Radius = 10.0;
     var sun = BABYLON.Mesh.CreateSphere("sun", 20.0, 60.0, scene);
     var planet1 = BABYLON.Mesh.CreateSphere("planet1", 20.0, planet1Radius, scene);
     var planet2 = BABYLON.Mesh.CreateSphere("planet2", 20.0, 15.0, scene);
     var planet3 = BABYLON.Mesh.CreateSphere("planet3", 20.0, 20.0, scene);
     var moon1 = BABYLON.Mesh.CreateSphere("moon1", 20.0, 2.0, scene);
+    // Load the ships
+    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "ship1.babylon", scene, function (newMeshes, particleSystems) {
+	newMeshes[0].position = new BABYLON.Vector3(80, 80, 0);
+    });
+
 
     // Change the position
     var planet1Position = 50;

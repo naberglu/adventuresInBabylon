@@ -14,20 +14,20 @@ function mainMenu(engine) {
     hlight0.groundColor = new BABYLON.Color3(0, 0, 0);
     hlight0.intensity = 0.5;
 
-    // Load the buttons
-    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "mainMenu.babylon", scene, function (newMeshes, particleSystems) {
-    });
-
     var title = BABYLON.Mesh.CreateBox("title", 1.0, scene);
 
     var titleDimensions = new BABYLON.Vector3(5, 0.0001, 50);
     title.position.x = -14;
     title.scaling = titleDimensions;
 
+    // Load the buttons
+    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "mainMenu.babylon", scene, function (newMeshes, particleSystems) {});
+
+
     // Add click event to handle clicking options
     $(window).on('click', function(event) {
 	var pickResult = scene.pick(event.clientX, event.clientY);
-	console.log(pickResult.pickedMesh.id);
+
 	if (pickResult.hit) {
 	    switch(pickResult.pickedMesh.id) {
 		case "singlePlayer":
