@@ -27,6 +27,7 @@ function loadScene(engine, id) {
 	scene = gameplayScene(engine);
 	break;
     }
+
     scene.executeWhenReady(function () {
         // Once the scene is loaded, just register a render loop to render it
         engine.runRenderLoop(function () {
@@ -38,5 +39,5 @@ function loadScene(engine, id) {
 	    engine.resize();
 	    borderResize();
         });
-    });	
+    });
 };

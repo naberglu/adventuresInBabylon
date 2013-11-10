@@ -14,33 +14,20 @@ function mainMenu(engine) {
     hlight0.groundColor = new BABYLON.Color3(0, 0, 0);
     hlight0.intensity = 0.5;
 
+    // Load the buttons
+    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "mainMenu.babylon", scene, function (newMeshes, particleSystems) {
+    });
+
     var title = BABYLON.Mesh.CreateBox("title", 1.0, scene);
-    var singlePlayer = BABYLON.Mesh.CreateCylinder("singlePlayer", 0.0, 3, 3, 6, scene, false);
-    var multiPlayer = BABYLON.Mesh.CreateBox("multiPlayer", 1.0, scene);
-    var settings = BABYLON.Mesh.CreateBox("settings", 1.0, scene);
-    var credits = BABYLON.Mesh.CreateBox("credits", 1.0, scene);
 
     var titleDimensions = new BABYLON.Vector3(5, 0.0001, 50);
     title.position.x = -14;
     title.scaling = titleDimensions;
 
-    var dimensions = new BABYLON.Vector3(2, 0.00001, 13);
-    singlePlayer.position.x = -4;
-    singlePlayer.scaling = dimensions;
-    console.log(singlePlayer);
-
-    multiPlayer.position.x = 2;
-    multiPlayer.scaling = dimensions;
-
-    settings.position.x = 8;
-    settings.scaling = dimensions
-
-    credits.position.x = 14;
-    credits.scaling = dimensions
-
     // Add click event to handle clicking options
     $(window).on('click', function(event) {
 	var pickResult = scene.pick(event.clientX, event.clientY);
+	console.log(pickResult.pickedMesh.id);
 	if (pickResult.hit) {
 	    switch(pickResult.pickedMesh.id) {
 		case "singlePlayer":
