@@ -2,6 +2,29 @@ function mainMenu(engine) {
     //Creation of the scene 
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = [0,0,0];
+    // Load the buttons
+    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "mainMenu.babylon", scene, function (newMeshes, particleSystems) {
+	var materialSinglePlayer = new BABYLON.StandardMaterial("singlePlayer", scene);
+	materialSinglePlayer.diffuseTexture = new BABYLON.Texture("/images/singlePlayer.png", scene);
+	newMeshes[3].material = materialSinglePlayer;
+
+	var materialMultiPlayer = new BABYLON.StandardMaterial("multiPlayer", scene);
+	materialMultiPlayer.diffuseTexture = new BABYLON.Texture("/images/multiPlayer.png", scene);
+	newMeshes[2].material = materialMultiPlayer;
+
+	var materialSettings = new BABYLON.StandardMaterial("settings", scene);
+	materialSettings.diffuseTexture = new BABYLON.Texture("/images/settings.png", scene);
+	newMeshes[1].material = materialSettings;
+
+	var materialCredits = new BABYLON.StandardMaterial("credits", scene);
+	materialCredits.diffuseTexture = new BABYLON.Texture("/images/credits.png", scene);
+	newMeshes[0].material = materialCredits;
+
+//	materialSinglePlayer.diffuseTexture.uScale = 1.0;
+//	materialSinglePlayer.diffuseTexture.vScale = 4.7;
+	
+    });
+
     var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0.0, 0.0, 50, new BABYLON.Vector3(0, 0, 0), scene);
 
     // Let there be light
@@ -19,10 +42,6 @@ function mainMenu(engine) {
     var titleDimensions = new BABYLON.Vector3(5, 0.0001, 50);
     title.position.x = -14;
     title.scaling = titleDimensions;
-
-    // Load the buttons
-    BABYLON.SceneLoader.ImportMesh("", "/scenes/", "mainMenu.babylon", scene, function (newMeshes, particleSystems) {});
-
 
     // Add click event to handle clicking options
     $(window).on('click', function(event) {
