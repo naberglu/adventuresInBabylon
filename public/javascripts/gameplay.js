@@ -56,6 +56,9 @@ function gameplayScene(engine) {
     // Load the ships
     BABYLON.SceneLoader.ImportMesh("", "/scenes/", "ship1.babylon", scene, function (newMeshes, particleSystems) {
 	newMeshes[0].position = new BABYLON.Vector3(80, 80, 0);
+	var materialShip = new BABYLON.StandardMaterial("ship", scene);
+	materialShip.diffuseColor = new BABYLON.Color3(1, 0, 0);
+	newMeshes[0].material = materialShip;
     });
 
 
