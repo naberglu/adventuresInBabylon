@@ -50,7 +50,6 @@ function gameplayScene(engine) {
 
     // Create the ether
     var ether = BABYLON.Mesh.CreatePlane("ether", 1000.0, scene);
-//    ether.position.y = -60;
     ether.rotation = new BABYLON.Vector3(Math.PI / 2, Math.PI, 0);
 
     // Add some planets
@@ -86,6 +85,7 @@ function gameplayScene(engine) {
     var materialPlanet2 = new BABYLON.StandardMaterial("planet2", scene);
     var materialPlanet3 = new BABYLON.StandardMaterial("planet3", scene);
 
+
     materialSun.diffuseTexture = new BABYLON.Texture("/images/sun.png", scene);
     materialGas1.diffuseTexture = new BABYLON.Texture("/images/gas1.png", scene);
     materialPlanet2.diffuseTexture = new BABYLON.Texture("/images/planet2.png", scene);
@@ -99,6 +99,11 @@ function gameplayScene(engine) {
     planet1.material = materialGas1;
     planet2.material = materialPlanet2;
     planet3.material = materialPlanet3;
+
+    // Ether material
+    var materialEther = new BABYLON.StandardMaterial("ether", scene);
+    materialEther.alpha = 0.0;
+    ether.material = materialEther;
 
      // Shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light0);
@@ -179,13 +184,19 @@ function gameplayScene(engine) {
     // Add right mouse button event
     $('canvas').mousedown(function(event) {
 	switch(event.which) {
+	    case 1:
 	    case 3:
 	        event.preventDefault();
+	    	var pickResult = scene.pick(event.clientX, event.clientY);
+	        if (pickResult.hit && pickResult.pickedMesh.id === "ether") {
+		    var ship = scene.getMeshByID("ship");
+		    ship.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
+		}
 	        break;
 	}
-
     });
 
+    // Scroll the camera in and out
     $('canvas').on('mousewheel', function(event, delta, deltaX, deltaY) {
 	scene.activeCamera.radius -= 10 * delta;
     });
