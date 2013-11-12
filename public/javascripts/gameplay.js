@@ -169,6 +169,16 @@ function gameplayScene(engine) {
 	this.iid && clearInterval(this.iid);
     });
 
+    // Add right mouse button event
+    $('canvas').mousedown(function(event) {
+	switch(event.which) {
+	    case 3:
+	        event.preventDefault();
+	        break;
+	}
+
+    });
+
     // Set the size of the borders given the windows width/height
     borderResize();
 
