@@ -48,6 +48,11 @@ function gameplayScene(engine) {
     light0.specular = new BABYLON.Color3(1, 1, 0);
     light0.intensity = 1;
 
+    // Create the ether
+    var ether = BABYLON.Mesh.CreatePlane("ether", 1000.0, scene);
+//    ether.position.y = -60;
+    ether.rotation = new BABYLON.Vector3(Math.PI / 2, Math.PI, 0);
+
     // Add some planets
     var planet1Radius = 10.0;
     var sun = BABYLON.Mesh.CreateSphere("sun", 20.0, 60.0, scene);
