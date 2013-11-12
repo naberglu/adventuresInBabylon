@@ -30,6 +30,8 @@ function gameplayScene(engine) {
 
     //Adding of the Camera
     var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", Math.PI / 2, Math.PI / 3, 410, new BABYLON.Vector3(0, 0, 0), scene);
+    camera.lowerRadiusLimit = 70;
+    camera.upperRadiusLimit = 500;
 
     // Let there be light
     var hlight0 = new BABYLON.HemisphericLight("Hlight0", new BABYLON.Vector3(0, 50, 0), scene);
@@ -177,6 +179,10 @@ function gameplayScene(engine) {
 	        break;
 	}
 
+    });
+
+    $('canvas').on('mousewheel', function(event, delta, deltaX, deltaY) {
+	scene.activeCamera.radius -= 10 * delta;
     });
 
     // Set the size of the borders given the windows width/height

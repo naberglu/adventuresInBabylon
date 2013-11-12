@@ -19,10 +19,6 @@ function mainMenu(engine) {
 	var materialCredits = new BABYLON.StandardMaterial("credits", scene);
 	materialCredits.diffuseTexture = new BABYLON.Texture("/images/credits.png", scene);
 	newMeshes[0].material = materialCredits;
-
-//	materialSinglePlayer.diffuseTexture.uScale = 1.0;
-//	materialSinglePlayer.diffuseTexture.vScale = 4.7;
-	
     });
 
     var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0.0, 0.0, 50, new BABYLON.Vector3(0, 0, 0), scene);
