@@ -61,7 +61,6 @@ function gameplayScene(engine) {
     var moon1 = BABYLON.Mesh.CreateSphere("moon1", 20.0, 2.0, scene);
     // Load the ships
     BABYLON.SceneLoader.ImportMesh("", "/scenes/", "ship1.babylon", scene, function (newMeshes, particleSystems) {
-	newMeshes[0].position = new BABYLON.Vector3(80, 80, 0);
 	var materialShip = new BABYLON.StandardMaterial("ship", scene);
 	materialShip.diffuseColor = new BABYLON.Color3(1, 0, 0);
 	newMeshes[0].material = materialShip;
@@ -116,7 +115,7 @@ function gameplayScene(engine) {
     var planet1RotationSpeed = 0.03;
     var planet2RotationSpeed = 0.05;
     var planet3RotationSpeed = 0.07;
-    scene.beforeRender = function() {
+    function rotatePlanets() {
 	sun.rotation.y -= sunRotationSpeed;
 
         // Planet 1 orbit
@@ -144,6 +143,10 @@ function gameplayScene(engine) {
 
 	angle += 0.01;
 	speedy += 0.1;
+    }
+
+    scene.beforeRender = function() {
+	rotatePlanets();
     };
 
     // Move the camera around when the user's mouse is near the edge
@@ -190,7 +193,27 @@ function gameplayScene(engine) {
 	    	var pickResult = scene.pick(event.clientX, event.clientY);
 	        if (pickResult.hit && pickResult.pickedMesh.id === "ether") {
 		    var ship = scene.getMeshByID("ship");
-		    ship.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
+		    var point = pickResult.pickedPoint;
+		    var deltaZ = ship.position.z - point.z;
+		    var deltaX = ship.position.x - point.x;
+		    console.log(deltaX);
+		    console.log(deltaZ);
+
+		    var angle = Math.atan2(deltaX,deltaZ);
+		    ship.rotation.y = angle + (3 * Math.PI) / 2;
+
+		    var jump = 5;
+		    var dv = point.subtract(ship.position);
+		    dv = new BABYLON.Vector3(dv.x * 0.01, dv.y * 0.01, dv.z * 0.01);
+		    console.log(dv);
+
+		    scene.beforeRender = function() {
+			rotatePlanets();
+			
+			if (Math.round(ship.position.x) != Math.round(point.x) || Math.round(ship.position.z) != Math.round(point.z)) {
+			    ship.position = ship.position.add(dv);
+			}
+		    }
 		}
 	        break;
 	}
