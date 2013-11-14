@@ -187,7 +187,6 @@ function gameplayScene(engine) {
     // Add right mouse button event
     $('canvas').mousedown(function(event) {
 	switch(event.which) {
-	    case 1:
 	    case 3:
 	        event.preventDefault();
 	    	var pickResult = scene.pick(event.clientX, event.clientY);
@@ -196,21 +195,20 @@ function gameplayScene(engine) {
 		    var point = pickResult.pickedPoint;
 		    var deltaZ = ship.position.z - point.z;
 		    var deltaX = ship.position.x - point.x;
-		    console.log(deltaX);
-		    console.log(deltaZ);
 
 		    var angle = Math.atan2(deltaX,deltaZ);
 		    ship.rotation.y = angle + (3 * Math.PI) / 2;
 
-		    var jump = 5;
+		    var jump = 2;
 		    var dv = point.subtract(ship.position);
-		    dv = new BABYLON.Vector3(dv.x * 0.01, dv.y * 0.01, dv.z * 0.01);
-		    console.log(dv);
+		    var mag = dv.length();
+		    dv.x = (dv.x / mag) * jump;
+		    dv.y = (dv.y / mag) * jump;
+		    dv.z = (dv.z / mag) * jump;
 
 		    scene.beforeRender = function() {
 			rotatePlanets();
-			
-			if (Math.round(ship.position.x) != Math.round(point.x) || Math.round(ship.position.z) != Math.round(point.z)) {
+			if (Math.abs(ship.position.x - point.x) > jump || (Math.abs(ship.position.z - point.z) > jump)) {
 			    ship.position = ship.position.add(dv);
 			}
 		    }
