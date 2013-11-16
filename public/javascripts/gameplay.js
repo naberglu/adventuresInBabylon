@@ -6,20 +6,21 @@ function gameplayScene(engine) {
     // Unbind the click event for the main menu
     $(window).off('click');
 
-    var starfield = new BABYLON.ParticleSystem("particles", 1000, scene);
+    var bounds = 1000;
+    var starfield = new BABYLON.ParticleSystem("particles", 2000, scene);
     starfield.particleTexture = new BABYLON.Texture("/images/star.png", scene);
     starfield.minAngularSpeed = -4.5;
     starfield.maxAngularSpeed = 4.5;
-    starfield.minSize = 0.5;
-    starfield.maxSize = 0.7;
+    starfield.minSize = 0.8;
+    starfield.maxSize = 1.0;
     starfield.minLifeTime = 1.0;
     starfield.maxLifeTime = 2.0;
-    starfield.minEmitPower = 0.5;
-    starfield.maxEmitPower = 2.0;
-    starfield.emitRate = 10000;
+    starfield.minEmitPower = 4.0;
+    starfield.maxEmitPower = 4.0;
+    starfield.emitRate = 2000;
     starfield.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    starfield.minEmitBox = new BABYLON.Vector3(-250, -250, -250);
-    starfield.maxEmitBox = new BABYLON.Vector3(250, 250, 250);
+    starfield.minEmitBox = new BABYLON.Vector3((-1) * bounds, 0, (-1) * bounds);
+    starfield.maxEmitBox = new BABYLON.Vector3(bounds, 0, bounds);
     starfield.direction1 = new BABYLON.Vector3(0, 0, 0);
     starfield.direction2 = new BABYLON.Vector3(0, 0, 0);
     starfield.color1 = new BABYLON.Color4(1, 1, 1, 1);
@@ -145,8 +146,23 @@ function gameplayScene(engine) {
 	speedy += 0.1;
     }
 
+    function limitCamera(camera) {
+	if (camera.target.x > bounds) {
+	    camera.target.x = bounds;
+	} else if (camera.target.x < ((-1) * bounds)) {
+	    camera.target.x = (-1) * bounds;
+	}
+
+	if (camera.target.z > bounds) {
+	    camera.target.z = bounds;
+	} else if (camera.target.z < ((-1) * bounds)) {
+	    camera.target.z = (-1) * bounds;
+	}
+    }
+
     scene.beforeRender = function() {
 	rotatePlanets();
+	limitCamera(camera);
     };
 
     // Move the camera around when the user's mouse is near the edge
@@ -208,6 +224,7 @@ function gameplayScene(engine) {
 
 		    scene.beforeRender = function() {
 			rotatePlanets();
+			limitCamera(camera);
 			if (Math.abs(ship.position.x - point.x) > jump || (Math.abs(ship.position.z - point.z) > jump)) {
 			    ship.position = ship.position.add(dv);
 			}
