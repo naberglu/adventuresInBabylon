@@ -200,6 +200,42 @@ function gameplayScene(engine) {
 	this.iid && clearInterval(this.iid);
     });
 
+
+    $('#trDiag').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z -= speed;
+	    scene.activeCamera.target.x -= speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+    $('#tlDiag').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z -= speed;
+	    scene.activeCamera.target.x += speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+    $('#blDiag').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z += speed;
+	    scene.activeCamera.target.x += speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+    $('#brDiag').on('mouseenter', function() {
+	this.iid = setInterval(function() {
+	    scene.activeCamera.target.z += speed;
+	    scene.activeCamera.target.x -= speed;
+	}, interval);
+    }).on('mouseleave', function(){
+	this.iid && clearInterval(this.iid);
+    });
+
+
+
     // Add right mouse button event
     $('canvas').mousedown(function(event) {
 	switch(event.which) {

@@ -15,7 +15,6 @@ html,body,canvas {
   position: absolute;
   height: 100%;
   width: 40px;
-
 }
 
 #topBorder {
@@ -34,3 +33,24 @@ html,body,canvas {
   bottom: 0;
 }
 
+#trDiag, #brDiag, #tlDiag, #blDiag {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+#trDiag {
+  top: 0;
+  right: 0;
+}
+#brDiag {
+  bottom: 0;
+  right: 0;
+}
+#tlDiag {
+  top: 0;
+  left: 0;
+}
+#blDiag {
+  bottom: 0;
+  left: 0;
+}
