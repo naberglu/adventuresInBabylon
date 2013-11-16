@@ -9,8 +9,6 @@ function gameplayScene(engine) {
     var bounds = 1000;
     var starfield = new BABYLON.ParticleSystem("particles", 2000, scene);
     starfield.particleTexture = new BABYLON.Texture("/images/star.png", scene);
-    starfield.minAngularSpeed = -4.5;
-    starfield.maxAngularSpeed = 4.5;
     starfield.minSize = 0.8;
     starfield.maxSize = 1.0;
     starfield.minLifeTime = 1.0;
@@ -23,9 +21,6 @@ function gameplayScene(engine) {
     starfield.maxEmitBox = new BABYLON.Vector3(bounds, 0, bounds);
     starfield.direction1 = new BABYLON.Vector3(0, 0, 0);
     starfield.direction2 = new BABYLON.Vector3(0, 0, 0);
-    starfield.color1 = new BABYLON.Color4(1, 1, 1, 1);
-    starfield.color2 = new BABYLON.Color4(1, 1, 1, 1);
-    starfield.gravity = new BABYLON.Vector3(0, 0, 0);
     starfield.emitter = new BABYLON.Vector3(0, -2, 0);
     starfield.start();
 
@@ -105,11 +100,6 @@ function gameplayScene(engine) {
     materialEther.alpha = 0.0;
     ether.material = materialEther;
 
-     // Shadows
-    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light0);
-    shadowGenerator.getShadowMap().renderList.push(moon1);
-    planet1.receiveShadows = true;
-    
     var angle = 0.0;
     var speedy = 0.0;
     var sunRotationSpeed = 0.01;
