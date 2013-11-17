@@ -1,3 +1,11 @@
+// Setup sound
+soundManager.setup({
+    url: '/flash',
+    debugMode: false,
+    useHTML5Audio: true,
+    preferFlash: false
+});
+
 function borderResize() {
     var width = $(window).width();
     var height = $(window).height();
@@ -14,9 +22,15 @@ function loadScene(engine, id) {
     // Load the specific scene
     switch(id) {
     case 0:
+	soundManager.createSound({
+	    id: 'mainMenu',
+	    url: '/music/mainMenu.mp3'
+	});
+	soundManager.play('mainMenu');
 	scene = mainMenu(engine);
 	break;
     case 1:
+	soundManager.stop('mainMenu');
 	scene = gameplayScene(engine);
 	break;
     }
@@ -42,7 +56,7 @@ window.onload = function(){
     if (!BABYLON.Engine.isSupported()) {
         window.alert('Browser not supported');
     } else {
-        // Babylon
+        // Start Babylon
         var engine = new BABYLON.Engine(canvas, true);
 	
 	// Load the main menu first
