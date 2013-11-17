@@ -45,7 +45,7 @@ function gameplayScene(engine) {
     light0.intensity = 1;
 
     // Create the ether
-    var ether = BABYLON.Mesh.CreatePlane("ether", 1000.0, scene);
+    var ether = BABYLON.Mesh.CreatePlane("ether", 2 * bounds, scene);
     ether.rotation = new BABYLON.Vector3(Math.PI / 2, Math.PI, 0);
 
     // Add some planets
@@ -223,8 +223,6 @@ function gameplayScene(engine) {
     }).on('mouseleave', function(){
 	this.iid && clearInterval(this.iid);
     });
-
-
 
     // Add right mouse button event
     $('canvas').mousedown(function(event) {
