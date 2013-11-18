@@ -35,8 +35,8 @@ html,body,canvas {
 
 #trDiag, #brDiag, #tlDiag, #blDiag {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 4px;
+  height: 4px;
 }
 #trDiag {
   top: 0;
