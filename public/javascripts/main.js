@@ -22,26 +22,28 @@ function loadScene(engine, id) {
     // Load the specific scene
     switch(id) {
     case 0:
-	soundManager.createSound({
-	    id: 'mainMenu',
-	    url: '/music/mainMenu.mp3'
-	});
-	soundManager.play('mainMenu');
 	scene = mainMenu(engine);
 	break;
     case 1:
-	soundManager.stop('mainMenu');
-	soundManager.createSound({
-	    id: 'gameplay',
-	    url: '/music/gameplay.mp3'
-	});
-	soundManager.play('gameplay');
-
 	scene = gameplayScene(engine);
 	break;
     }
 
     scene.executeWhenReady(function () {
+	if (id === 0) {
+	    soundManager.createSound({
+		id: 'mainMenu',
+		url: '/music/mainMenu.mp3'
+	    });
+	    soundManager.play('mainMenu');
+	} else if (id === 1) {
+	    soundManager.stop('mainMenu');
+	    soundManager.createSound({
+		id: 'gameplay',
+		url: '/music/gameplay.mp3'
+	    });
+	    soundManager.play('gameplay');
+	}
         // Once the scene is loaded, just register a render loop to render it
         engine.runRenderLoop(function () {
 	    scene.render();

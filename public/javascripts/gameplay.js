@@ -7,7 +7,7 @@ function gameplayScene(engine) {
     $(window).off('click');
 
     var bounds = 1000;
-    var starfield = new BABYLON.ParticleSystem("particles", 2000, scene);
+    var starfield = new BABYLON.ParticleSystem("starfield", 2000, scene);
     starfield.particleTexture = new BABYLON.Texture("/images/star.png", scene);
     starfield.minSize = 0.8;
     starfield.maxSize = 1.0;
@@ -21,7 +21,7 @@ function gameplayScene(engine) {
     starfield.maxEmitBox = new BABYLON.Vector3(bounds, 0, bounds);
     starfield.direction1 = new BABYLON.Vector3(0, 0, 0);
     starfield.direction2 = new BABYLON.Vector3(0, 0, 0);
-    starfield.emitter = new BABYLON.Vector3(0, -2, 0);
+    starfield.emitter = new BABYLON.Vector3(0, -5, 0);
     starfield.start();
 
     //Adding of the Camera
@@ -82,6 +82,10 @@ function gameplayScene(engine) {
 
 
     materialSun.diffuseTexture = new BABYLON.Texture("/images/sun.png", scene);
+    materialSun.diffuseTexture.uScale = 3.0;
+    materialSun.diffuseTexture.vScale = 3.0;
+
+    
     materialGas1.diffuseTexture = new BABYLON.Texture("/images/gas1.png", scene);
     materialPlanet2.diffuseTexture = new BABYLON.Texture("/images/planet2.png", scene);
     materialPlanet3.diffuseTexture = new BABYLON.Texture("/images/planet3.png", scene);
