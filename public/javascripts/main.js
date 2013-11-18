@@ -31,6 +31,12 @@ function loadScene(engine, id) {
 	break;
     case 1:
 	soundManager.stop('mainMenu');
+	soundManager.createSound({
+	    id: 'gameplay',
+	    url: '/music/gameplay.mp3'
+	});
+	soundManager.play('gameplay');
+
 	scene = gameplayScene(engine);
 	break;
     }
